@@ -1,14 +1,40 @@
-const http = require('http');
- 
-const hostname = '127.0.0.1';
-const port = 3000;
- 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
-});
- 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+
+const express = require('express')
+
+
+const app = express()
+
+app.use(express.json())
+
+const example1get =  (req, res) => {
+    res.status(200)
+    .json({
+        status: 'success',
+        results: "Recieved GET for example1",
+        data: {
+            "example": "data"
+        }
+    })
+}
+
+const example1post =  (req, res) => {
+    res.status(200)
+    .json({
+        status: 'success',
+        results: "Recieved POST for example1",
+        data: {
+            "example": "data"
+        }
+    })
+}
+
+
+app.route('/api/v1/example1')
+    .get(example1get)
+    .post(example1post)
+
+const port=3000
+
+app.listen(port, () =>{
+    console.log (`Server is listenning on port ${port}`)
+})
